@@ -23,8 +23,8 @@ TAREFAS = [
 
 app = FastAPI()
 
-@app.get('/tarefas')
+
+@app.get("/tarefas")
 def listar():
 
     return TAREFAS
-

@@ -8,6 +8,9 @@ fastapi = "*"
 httpie = "*"
 uvicorn = "*"
 pytest = "*"
+isort = "*"
+black = "*"
+flake8 = "*"
 
 [dev-packages]
 
