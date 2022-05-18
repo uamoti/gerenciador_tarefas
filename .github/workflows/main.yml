@@ -3,12 +3,12 @@ name: main
 on:
   push:
     branches:
-      - 'main'
+      - "main"
     tags:
-      - '*'
+      - "*"
   pull_request:
     branches:
-      - 'main'
+      - "main"
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: '3.10'
           cache: 'pip'
-      - run: pip install -r Pipfile
+      - run: pip install -r dev-requirements.txt
 
       - name: Run isort
         run: python -m isort --check .
@@ -32,4 +32,3 @@ jobs:
 
       - name: Run tests
         run: python -m pytest .
-
