@@ -7,12 +7,12 @@ name = "pypi"
 fastapi = "*"
 httpie = "*"
 uvicorn = "*"
-pytest = "*"
-isort = "*"
-black = "*"
-flake8 = "*"
 
 [dev-packages]
+pytest = "*"
+isort = "*"
+flake8 = "*"
+black = "*"
 
 [requires]
 python_version = "3.8"
