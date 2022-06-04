@@ -1,7 +1,7 @@
 from enum import Enum
 from uuid import UUID, uuid4
 
-from fastapi import FastAPI, status
+from fastapi import FastAPI, status, Response
 from pydantic import BaseModel, constr
 
 
@@ -27,20 +27,20 @@ TAREFAS = [
     {
         "id_num": "1",
         "titulo": "fazer compras",
-        "descrição": "comprar leite e ovos",
-        "estado": "não finalizado",
+        "descricao": "comprar leite e ovos",
+        "estado": "nao finalizado",
     },
     {
         "id_num": "2",
         "titulo": "levar o cachorro para tosar",
-        "descrição": "está muito peludo",
-        "estado": "não finalizado",
+        "descricao": "está muito peludo",
+        "estado": "nao finalizado",
     },
     {
         "id_num": "3",
         "titulo": "lavar roupas",
-        "descrição": "estão sujas",
-        "estado": "não finalizado",
+        "descricao": "estão sujas",
+        "estado": "nao finalizado",
     },
 ]
 
@@ -63,3 +63,18 @@ def criar(tarefa: TarefaEntrada):
     TAREFAS.append(nova_tarefa)
 
     return nova_tarefa
+
+
+@app.delete("/tarefas/{id_num}")
+def remover(id_num):
+
+    for i in range(len(TAREFAS)):
+        if TAREFAS[i]['id_num'] == id_num:
+            TAREFAS.pop(i)
+            #break
+            return Response(status_code=status.HTTP_204_NO_CONTENT)
+    else:
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+
+
+

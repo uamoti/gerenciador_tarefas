@@ -175,3 +175,36 @@ def test_tarefa_criada_deve_ser_salva():
     cliente.post("/tarefas", json=tarefa)
     assert len(TAREFAS) == 1
     TAREFAS.clear()
+
+
+def test_remover_tarefa_existente():
+
+    TAREFAS.append(
+        {
+            "id_num": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "titulo": "tarefa",
+            "descricao": "descricao",
+            "estado": "finalizado",
+        }
+    )
+    cliente = TestClient(app)
+    resposta = cliente.delete("/tarefas/3fa85f64-5717-4562-b3fc-2c963f66afa6")
+    assert resposta.status_code == status.HTTP_204_NO_CONTENT
+    TAREFAS.clear()
+    
+    
+def test_remover_tarefa_inexistente():
+
+    TAREFAS.append(
+        {
+            "id_num": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "titulo": "tarefa",
+            "descricao": "descricao",
+            "estado": "nao finalizado",
+        }
+    )
+    cliente = TestClient(app)
+    resposta = cliente.delete("/tarefas/3fa85f64-5717-4562-b3fc-2c963f66af")
+    assert resposta.status_code == status.HTTP_404_NOT_FOUND
+    TAREFAS.clear()
+
