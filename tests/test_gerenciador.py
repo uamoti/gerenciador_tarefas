@@ -191,8 +191,8 @@ def test_remover_tarefa_existente():
     resposta = cliente.delete("/tarefas/3fa85f64-5717-4562-b3fc-2c963f66afa6")
     assert resposta.status_code == status.HTTP_204_NO_CONTENT
     TAREFAS.clear()
-    
-    
+
+
 def test_remover_tarefa_inexistente():
 
     TAREFAS.append(
@@ -208,3 +208,29 @@ def test_remover_tarefa_inexistente():
     assert resposta.status_code == status.HTTP_404_NOT_FOUND
     TAREFAS.clear()
 
+
+def test_listagem_ordenada_por_estado():
+
+    TAREFAS.append(
+        {
+            "titulo": "tarefa 1",
+            "descricao": "deve aparecer depois",
+            "estado": "finalizado",
+        }
+    )
+    TAREFAS.append(
+        {
+            "titulo": "tarefa 2",
+            "descricao": "deve aparecer primeiro",
+            "estado": "nao finalizado",
+        }
+    )
+    cliente = TestClient(app)
+    resposta = cliente.get("/tarefas")
+    assert resposta.json()[0]["estado"] == "nao finalizado"
+    TAREFAS.clear()
+
+
+def test_finalizar_tarefa():
+
+    pass

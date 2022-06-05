@@ -1,7 +1,7 @@
 from enum import Enum
 from uuid import UUID, uuid4
 
-from fastapi import FastAPI, status, Response
+from fastapi import FastAPI, Response, status
 from pydantic import BaseModel, constr
 
 
@@ -50,7 +50,7 @@ app = FastAPI()
 @app.get("/tarefas")
 def listar():
 
-    return TAREFAS
+    return sorted(TAREFAS, key=lambda x: x["estado"], reverse=True)
 
 
 @app.post(
@@ -69,12 +69,21 @@ def criar(tarefa: TarefaEntrada):
 def remover(id_num):
 
     for i in range(len(TAREFAS)):
-        if TAREFAS[i]['id_num'] == id_num:
+        if TAREFAS[i]["id_num"] == id_num:
             TAREFAS.pop(i)
-            #break
+            # break
             return Response(status_code=status.HTTP_204_NO_CONTENT)
     else:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
 
+@app.patch("/tarefas/{id_num}", response_model=Tarefa)
+def atualizar_estado(id_num):
 
+    for i in range(len(TAREFAS)):
+        if TAREFAS[i]["id_num"] == id_num:
+            TAREFAS[i]["estado"] = "finalizado"
+            # break
+            return Response(content=TAREFAS[i], status_code=status.HTTP_200_OK)
+    else:
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
