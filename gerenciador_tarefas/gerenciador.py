@@ -86,8 +86,6 @@ def atualizar_estado(id_num):
         if TAREFAS[i]["id_num"] == id_num:
             TAREFAS[i]["estado"] = "finalizado"
             # break
-            return TAREFAS[
-                i
-            ]  # Response(content=TAREFAS[i], media_type='application/json', status_code=status.HTTP_200_OK)
+            return TAREFAS[i]
     else:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
