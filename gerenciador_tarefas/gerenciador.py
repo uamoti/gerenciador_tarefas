@@ -85,7 +85,18 @@ def atualizar_estado(id_num):
     for i in range(len(TAREFAS)):
         if TAREFAS[i]["id_num"] == id_num:
             TAREFAS[i]["estado"] = "finalizado"
-            # break
+            return TAREFAS[i]
+    else:
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+
+
+@app.get(
+    "/tarefas/{id_num}", response_model=Tarefa, status_code=status.HTTP_200_OK
+)
+def detalhar_tarefa(id_num):
+
+    for i in range(len(TAREFAS)):
+        if TAREFAS[i]["id_num"] == id_num:
             return TAREFAS[i]
     else:
         return Response(status_code=status.HTTP_404_NOT_FOUND)

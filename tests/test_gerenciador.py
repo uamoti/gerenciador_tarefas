@@ -263,3 +263,36 @@ def test_finalizar_tarefa_inexistente():
     resposta = cliente.patch("/tarefas/3fa85f64-5717-4562-b3fc-2c963f")
     assert resposta.status_code == status.HTTP_404_NOT_FOUND
     TAREFAS.clear()
+
+
+def test_detalhar_tarefa_existente():
+
+    TAREFAS.append(
+        {
+            "id_num": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "titulo": "tarefa",
+            "descricao": "descricao",
+            "estado": "nao finalizado",
+        }
+    )
+    cliente = TestClient(app)
+    resposta = cliente.get("/tarefas/3fa85f64-5717-4562-b3fc-2c963f66afa6")
+    assert resposta.status_code == status.HTTP_200_OK
+    assert resposta.headers["Content-Type"] == "application/json"
+    TAREFAS.clear()
+
+
+def test_detalhar_tarefa_inexistente():
+
+    TAREFAS.append(
+        {
+            "id_num": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "titulo": "tarefa",
+            "descricao": "descricao",
+            "estado": "nao finalizado",
+        }
+    )
+    cliente = TestClient(app)
+    resposta = cliente.get("/tarefas/3fa85f64-5717-4562-b3fc-2c963f66af")
+    assert resposta.status_code == status.HTTP_404_NOT_FOUND
+    TAREFAS.clear()
