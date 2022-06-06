@@ -25,19 +25,19 @@ class Tarefa(TarefaEntrada):
 
 TAREFAS = [
     {
-        "id_num": "1",
+        "id_num": "14267868-1009-4ff9-9aeb-64f93f06117a",
         "titulo": "fazer compras",
         "descricao": "comprar leite e ovos",
         "estado": "nao finalizado",
     },
     {
-        "id_num": "2",
+        "id_num": "37b30591-bf9f-4caa-b2fa-87fcd7ec9665",
         "titulo": "levar o cachorro para tosar",
         "descricao": "está muito peludo",
         "estado": "nao finalizado",
     },
     {
-        "id_num": "3",
+        "id_num": "27800855-70b6-4235-9662-ff240319e18c",
         "titulo": "lavar roupas",
         "descricao": "estão sujas",
         "estado": "nao finalizado",
@@ -77,13 +77,17 @@ def remover(id_num):
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
 
-@app.patch("/tarefas/{id_num}", response_model=Tarefa)
+@app.patch(
+    "/tarefas/{id_num}", response_model=Tarefa, status_code=status.HTTP_200_OK
+)
 def atualizar_estado(id_num):
 
     for i in range(len(TAREFAS)):
         if TAREFAS[i]["id_num"] == id_num:
             TAREFAS[i]["estado"] = "finalizado"
             # break
-            return Response(content=TAREFAS[i], status_code=status.HTTP_200_OK)
+            return TAREFAS[
+                i
+            ]  # Response(content=TAREFAS[i], media_type='application/json', status_code=status.HTTP_200_OK)
     else:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
